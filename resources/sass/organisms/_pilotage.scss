@@ -1,0 +1,23 @@
+.pilotage{
+    display: flex;
+    flex-direction: row;
+    
+
+    &__steps{
+        width: 40%;
+        padding: 0 3rem 1rem 1rem;
+        margin-top: 4rem;
+        font-size: 4.8rem;
+        line-height: 6.4rem;
+        font-weight: 800;
+    }
+
+    &__info{
+        width:60%;
+        border: 3px solid #E8F0FC;
+        border-radius: 10px;
+        padding: 26px 40px;
+        display: inherit;
+        flex-direction: column;
+    }
+}

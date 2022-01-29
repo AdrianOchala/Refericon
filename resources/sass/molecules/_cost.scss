@@ -1,0 +1,49 @@
+.cost{
+    display: inherit;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__choice{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-basis: 64%;
+        // width: 251px;
+
+        &--title{
+            display: flex;
+            font-size: 2rem;
+            line-height: 3.2rem;
+            padding-bottom: 1rem;
+        }
+    }
+
+    &__money{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-basis: 34%;
+
+        p:first-of-type{
+            font-size: 2.7rem;
+            line-height: 3.2rem;
+            margin-top: 1.7rem;
+            margin-bottom: 0;
+        }
+
+        p:nth-of-type(2){
+            color: #646464;
+            font-size: 1.1rem;
+            line-height: 2rem;
+            font-weight: 500;
+            margin-bottom: 1.7rem;
+        }
+
+        p:nth-of-type(3){
+            font-size: 1.8rem;
+            line-height: 3.2rem;
+        }
+    }
+
+    
+}

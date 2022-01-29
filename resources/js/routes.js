@@ -1,9 +1,15 @@
-
+import EditData from './components/EditData.vue';
+import Pilotage from './components/Pilotage.vue';
 
 export const routes = [
     {
-        name: 'edit',
+        name: 'editData',
         path: '/edit',
-        // component: EditData
+        component: EditData
+    },
+    {
+        name: 'showPilotage',
+        path: '/',
+        component: Pilotage
     }
 ];

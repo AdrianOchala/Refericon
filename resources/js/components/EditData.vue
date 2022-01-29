@@ -1,5 +1,7 @@
 <template>
-  
+    <div>
+        Edycja
+    </div>
 </template>
 
 <script>

@@ -1,0 +1,13 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; //1rem = 10px; 10px/16px = 62.5%
+}
+.wrapper{
+    margin: 20px clamp(1rem, 11.5vw, 50rem);
+    display: flex;
+    flex-direction: column;
+    color: #18191F;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+}

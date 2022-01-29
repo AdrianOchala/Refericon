@@ -1,0 +1,44 @@
+.button{
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    border-radius: 1.7rem;
+    color: white;
+    padding: 0.7rem 1.8rem;
+
+    &:not(:first-child){
+        margin-left: 2rem;
+    }
+
+    &--gray-outlined{
+        @extend .button;
+        border: 1px solid #C0CCDA;
+        color: #969BAB;
+    }
+    &--orange{
+        @extend .button;
+        background-color: #FBAD1C;
+
+        &-pale{
+            @extend .button;
+            background-color: rgba(218, 164, 66, 0.2);
+            color: #DAA442;
+        }
+    }
+
+    &--big{
+        @extend .button;
+        font-size: 2rem;
+        line-height: 3.2rem;
+        border-radius: 1.2rem;
+        color: #18191F;
+        padding: 2.15rem 2.65rem;
+        background-color: #F4D481;
+    }
+
+    
+}

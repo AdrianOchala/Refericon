@@ -1,0 +1,36 @@
+.customtooltip{
+    position: relative;
+    display: inline-block;
+
+    &__text{
+        visibility: hidden;
+        width: 37.8rem;
+        background-color: #C0CCDA;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1.5rem;
+        padding: 0.9rem 1.7rem;
+        border-radius: 0.5rem;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -18.9rem;
+
+        &::after{
+            content: " ";
+            position: absolute;
+            top: 100%; /* At the bottom of the tooltip */
+            left: 50%;
+            margin-left: -10px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #C0CCDA transparent transparent transparent;
+        }
+    }
+
+    img:hover + &__text{
+        visibility: visible;
+    }
+}
