@@ -15381,7 +15381,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      pilotage: {
+        id: null,
+        people: null,
+        pricePerPerson: null,
+        priceMonthly: null
+      },
+      error: null
+    };
+  },
+  mounted: function mounted() {
+    this.getInfo();
+  },
+  methods: {
+    getInfo: function getInfo() {
+      var _this = this;
+
+      axios.get('api/pilotage').then(function (res) {
+        _this.pilotage.id = res.data.id;
+        _this.pilotage.people = res.data.people;
+        _this.pilotage.pricePerPerson = res.data.pricePerPerson;
+        _this.pilotage.priceMonthly = res.data.priceMonthly;
+      });
+    },
+    updateInfo: function updateInfo() {
+      var _this2 = this;
+
+      axios.post('api/pilotage', this.pilotage).then(function (res) {
+        res.status === 200 ? _this2.error = false : _this2.error = true;
+      })["catch"](function (error) {
+        _this2.error = true;
+      });
+    },
+    countPrice: function countPrice(type) {
+      switch (type) {
+        case 'priceMonthly':
+        case 'people':
+          this.pilotage.pricePerPerson = this.pilotage.priceMonthly / this.pilotage.people;
+          break;
+
+        case 'price':
+          this.pilotage.priceMonthly = this.pilotage.people * this.pilotage.pricePerPerson;
+          break;
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -15396,7 +15475,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _images_tooltip_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/tooltip.svg */ "./resources/images/tooltip.svg");
 //
 //
 //
@@ -15465,12 +15543,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      priceType: 'Monthly',
       pilotage: {
-        users: 20
+        id: null,
+        people: null,
+        pricePerPerson: null,
+        priceMonthly: null
       },
       platforms: [{
         name: 'Liczba użytkowników',
@@ -15517,7 +15601,36 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.getInfo();
+  },
+  methods: {
+    getInfo: function getInfo() {
+      var _this = this;
+
+      axios.get('api/pilotage').then(function (res) {
+        _this.pilotage.id = res.data.id;
+        _this.pilotage.people = res.data.people;
+        _this.pilotage.pricePerPerson = res.data.pricePerPerson;
+        _this.pilotage.priceMonthly = res.data.priceMonthly;
+      });
+    },
+    changePrice: function changePrice(type) {
+      if (type != this.priceType) {
+        this.priceType = type;
+
+        switch (type) {
+          case 'Monthly':
+            this.pilotage.priceMonthly /= 12;
+            this.pilotage.pricePerPerson /= 12;
+            break;
+
+          case 'Yearly':
+            this.pilotage.priceMonthly *= 12;
+            this.pilotage.pricePerPerson *= 12;
+            break;
+        }
+      }
+    }
   }
 });
 
@@ -20658,21 +20771,6 @@ defineJQueryPlugin(Toast);
 
 //# sourceMappingURL=bootstrap.esm.js.map
 
-
-/***/ }),
-
-/***/ "./resources/images/tooltip.svg":
-/*!**************************************!*\
-  !*** ./resources/images/tooltip.svg ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/tooltip.svg?eabb32692afb4d435845ba5d1696ff2b");
 
 /***/ }),
 
@@ -38373,7 +38471,141 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Edycja\n")])
+  return _c("div", { staticClass: "form" }, [
+    _c("div", { staticClass: "form__title" }, [
+      _vm._v("Edytuj dane dla pilotażu"),
+    ]),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "people" } }, [_vm._v("Liczba osób")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.pilotage.people,
+          expression: "pilotage.people",
+        },
+      ],
+      attrs: {
+        type: "number",
+        pattern: "[0-9]+([\\.][0-9]+)?",
+        id: "people",
+        name: "people",
+      },
+      domProps: { value: _vm.pilotage.people },
+      on: {
+        input: [
+          function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.pilotage, "people", $event.target.value)
+          },
+          function ($event) {
+            return _vm.countPrice("people")
+          },
+        ],
+      },
+    }),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "price" } }, [_vm._v("Cena za 1 osobę (PLN)")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.pilotage.pricePerPerson,
+          expression: "pilotage.pricePerPerson",
+        },
+      ],
+      attrs: {
+        type: "number",
+        pattern: "[0-9]+([\\.][0-9]+)?",
+        id: "price",
+        name: "price",
+      },
+      domProps: { value: _vm.pilotage.pricePerPerson },
+      on: {
+        input: [
+          function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.pilotage, "pricePerPerson", $event.target.value)
+          },
+          function ($event) {
+            return _vm.countPrice("price")
+          },
+        ],
+      },
+    }),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "priceMonthly" } }, [
+      _vm._v("Cena miesięcznie (PLN)"),
+    ]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.pilotage.priceMonthly,
+          expression: "pilotage.priceMonthly",
+        },
+      ],
+      attrs: {
+        type: "number",
+        pattern: "[0-9]+([\\.][0-9]+)?",
+        id: "priceMonthly",
+        name: "priceMonthly",
+      },
+      domProps: { value: _vm.pilotage.priceMonthly },
+      on: {
+        input: [
+          function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.pilotage, "priceMonthly", $event.target.value)
+          },
+          function ($event) {
+            return _vm.countPrice("priceMonthly")
+          },
+        ],
+      },
+    }),
+    _vm._v(" "),
+    _vm.error !== null
+      ? _c(
+          "div",
+          { class: _vm.error ? "form__error failed" : "form__error success" },
+          [
+            !_vm.error
+              ? _c("span", [_vm._v("Pomyślnie zaktualizowano dane :)")])
+              : _vm.error
+              ? _c("span", [_vm._v("Niepowodzenie przy aktualizacji danych!")])
+              : _vm._e(),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "buttons--center" }, [
+      _c(
+        "button",
+        {
+          staticClass: "button--orange",
+          on: {
+            click: function ($event) {
+              return _vm.updateInfo()
+            },
+          },
+        },
+        [_vm._v("Zapisz")]
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38407,9 +38639,75 @@ var render = function () {
       "div",
       { staticClass: "pilotage__info" },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "cost" }, [
+          _c("div", { staticClass: "cost__choice" }, [
+            _c("div", { staticClass: "cost__choice--title" }, [
+              _vm._v("Cena za wybrany pakiet"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "buttons" }, [
+              _c(
+                "button",
+                {
+                  class:
+                    _vm.priceType === "Monthly"
+                      ? "button--orange"
+                      : "button--gray-outlined",
+                  on: {
+                    click: function ($event) {
+                      return _vm.changePrice("Monthly")
+                    },
+                  },
+                },
+                [_vm._v("Miesięcznie")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  class:
+                    _vm.priceType === "Yearly"
+                      ? "button--orange"
+                      : "button--gray-outlined",
+                  on: {
+                    click: function ($event) {
+                      return _vm.changePrice("Yearly")
+                    },
+                  },
+                },
+                [_vm._v("Rocznie")]
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "cost__money" }, [
+            _c("div", { staticClass: "buttons--center" }, [
+              _vm.priceType === "Monthly"
+                ? _c("button", { staticClass: "button--orange-pale" }, [
+                    _vm._v("Miesięcznie"),
+                  ])
+                : _c("button", { staticClass: "button--orange-pale" }, [
+                    _vm._v("Rocznie"),
+                  ]),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.pilotage.priceMonthly) + " PLN")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Kalkulacja dla " +
+                  _vm._s(_vm.pilotage.people) +
+                  " użytkowników"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(_vm._s(_vm.pilotage.pricePerPerson) + " PLN / osoba"),
+            ]),
+          ]),
+        ]),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c(
           "div",
@@ -38466,7 +38764,7 @@ var render = function () {
                     : _c("span", [
                         _vm._v(_vm._s(platform.option) + "  "),
                         index == 0
-                          ? _c("span", [_vm._v(_vm._s(_vm.pilotage.users))])
+                          ? _c("span", [_vm._v(_vm._s(_vm.pilotage.people))])
                           : _vm._e(),
                       ]),
                 ]),
@@ -38476,7 +38774,7 @@ var render = function () {
           0
         ),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _vm._l(_vm.involvements, function (involvement, id) {
           return _c("div", { key: "I" + id, staticClass: "details__row" }, [
@@ -38534,42 +38832,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cost" }, [
-      _c("div", { staticClass: "cost__choice" }, [
-        _c("div", { staticClass: "cost__choice--title" }, [
-          _vm._v("Cena za wybrany pakiet"),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "buttons" }, [
-          _c("button", { staticClass: "button--orange" }, [
-            _vm._v("Miesięcznie"),
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "button--gray-outlined" }, [
-            _vm._v("Rocznie"),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "cost__money" }, [
-        _c("div", { staticClass: "buttons--center" }, [
-          _c("button", { staticClass: "button--orange-pale" }, [
-            _vm._v("Miesięcznie"),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("p", [_vm._v("880 PLN")]),
-        _vm._v(" "),
-        _c("p", [_vm._v("Kalkulacja dla 20 użytkowników")]),
-        _vm._v(" "),
-        _c("p", [_vm._v("44 PLN / osoba")]),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

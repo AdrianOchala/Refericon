@@ -11474,6 +11474,43 @@ img:hover + .customtooltip__text {
   bottom: 0px;
 }
 
+.form {
+  display: inherit;
+  flex-direction: column;
+  align-self: center;
+  padding: 1vw;
+  width: 30vw;
+  border: 3px solid #E8F0FC;
+  border-radius: 10px;
+  font-size: 1.6rem;
+}
+.form input {
+  all: unset;
+  display: flex;
+  border-bottom: 2px solid #E8F0FC;
+  margin-bottom: 1rem;
+}
+.form__title {
+  display: inherit;
+  align-self: center;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.form__error {
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.form__error.success {
+  border: 2px solid #64CA8D;
+  color: #64CA8D;
+}
+.form__error.failed {
+  border: 2px solid red;
+  color: red;
+}
+
 .pilotage {
   display: flex;
   flex-direction: row;

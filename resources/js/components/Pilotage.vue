@@ -6,17 +6,20 @@
                 <div class="cost__choice">
                     <div class="cost__choice--title">Cena za wybrany pakiet</div>
                     <div class="buttons">
-                        <button class="button--orange">Miesięcznie</button>
-                        <button class="button--gray-outlined">Rocznie</button>
+                        <button :class="priceType === 'Monthly' ? 'button--orange' : 'button--gray-outlined'" 
+                                @click="changePrice('Monthly')">Miesięcznie</button>
+                        <button :class="priceType === 'Yearly' ? 'button--orange' : 'button--gray-outlined'" 
+                                @click="changePrice('Yearly')">Rocznie</button>
                     </div>
                 </div>
                 <div class="cost__money">
                     <div class="buttons--center">
-                        <button class="button--orange-pale">Miesięcznie</button>
+                        <button class="button--orange-pale" v-if="priceType === 'Monthly'">Miesięcznie</button>
+                        <button class="button--orange-pale" v-else>Rocznie</button>
                     </div>
-                    <p>880 PLN</p>
-                    <p>Kalkulacja dla 20 użytkowników</p>
-                    <p>44 PLN / osoba</p>
+                    <p>{{pilotage.priceMonthly}} PLN</p>
+                    <p>Kalkulacja dla {{pilotage.people}} użytkowników</p>
+                    <p>{{pilotage.pricePerPerson}} PLN / osoba</p>
                 </div>
             </div>
             <div class="details">
@@ -39,7 +42,7 @@
                     <div class="details__option">
                         <span v-if="platform.option == true"><font-awesome-icon icon="check-circle" :style="{color: '#64CA8D'}" ></font-awesome-icon> Tak </span>
                         <span v-else-if="platform.option == false"><font-awesome-icon icon="times-circle" :style="{color: 'red'}" ></font-awesome-icon> Nie </span>
-                        <span v-else>{{platform.option}} &nbsp;<span v-if="index == 0">{{pilotage.users}}</span></span>
+                        <span v-else>{{platform.option}} &nbsp;<span v-if="index == 0">{{pilotage.people}}</span></span>
                     </div>
                 </div>
             </div>
@@ -67,12 +70,15 @@
 </template>
 
 <script>
-import info from '../../images/tooltip.svg';
     export default {
         data(){
             return {
+                priceType: 'Monthly',
                 pilotage:{
-                    users: 20,
+                    id: null,
+                    people: null,
+                    pricePerPerson: null,
+                    priceMonthly: null
                 },
                 platforms:[
                     {
@@ -133,7 +139,33 @@ import info from '../../images/tooltip.svg';
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            this.getInfo();
+        },
+        methods:{
+            getInfo(){
+                axios.get('api/pilotage')
+                    .then(res => {
+                        this.pilotage.id                = res.data.id;
+                        this.pilotage.people            = res.data.people;
+                        this.pilotage.pricePerPerson    = res.data.pricePerPerson;
+                        this.pilotage.priceMonthly      = res.data.priceMonthly;
+                    })
+            },
+            changePrice(type){
+                if(type != this.priceType){
+                    this.priceType = type;
+                    switch(type){
+                        case 'Monthly':
+                            this.pilotage.priceMonthly      /= 12;
+                            this.pilotage.pricePerPerson    /= 12;
+                            break;
+                        case 'Yearly':
+                            this.pilotage.priceMonthly      *= 12;
+                            this.pilotage.pricePerPerson    *= 12;
+                            break;
+                    }
+                }
+            }
         }
     }
 </script>

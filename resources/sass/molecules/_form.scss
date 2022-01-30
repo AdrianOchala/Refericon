@@ -1,0 +1,41 @@
+.form{
+    display: inherit;
+    flex-direction: column;
+    align-self: center;
+    padding: 1vw;
+    width: 30vw;
+    border: 3px solid #E8F0FC;
+    border-radius: 10px;
+    font-size: 1.6rem;
+
+    input{
+        all: unset;
+        display: flex;
+        border-bottom: 2px solid #E8F0FC;
+        margin-bottom: 1rem;
+    }    
+
+    &__title{
+        display: inherit;
+        align-self: center;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    &__error{
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
+
+        &.success{
+            border: 2px solid #64CA8D;
+            color: #64CA8D
+        }
+
+        &.failed{
+            border: 2px solid red;
+            color: red;
+        }
+    }
+}
