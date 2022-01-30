@@ -23,14 +23,16 @@
                 </div>
             </div>
             <div class="details">
-                <div class="details__title">
-                    Platforma
+                <div class="details__title" id="platform">
+                    Platforma &nbsp;
+                    <font-awesome-icon v-if="showPlatform" icon="chevron-up"></font-awesome-icon>
+                    <font-awesome-icon v-else icon="chevron-down"></font-awesome-icon>
                 </div>
                 <div class="details__action">
                     <button class="button--big">Start (pilotaż)</button>
                 </div>   
             </div>
-            <div class="details__container">
+            <div class="details__container" id="platformRow">
                 <div class="details__row" v-for="(platform, index) in platforms" :key="'P'+index">
                     <div class="details__name">
                         {{platform.name}} &nbsp;
@@ -46,23 +48,27 @@
                     </div>
                 </div>
             </div>
-            <div class="details" style="margin-top: 4rem;">
+            <div class="details" id="involvement">
                 <div class="details__title">
-                    Zaangażowanie
+                    Zaangażowanie &nbsp;
+                    <font-awesome-icon v-if="showInvolvements" icon="chevron-up"></font-awesome-icon>
+                    <font-awesome-icon v-else icon="chevron-down"></font-awesome-icon>
                 </div>
             </div>
-            <div class="details__row" v-for="(involvement, id) in involvements" :key="'I'+id">
-                <div class="details__name">
-                    {{involvement.name}}&nbsp;
-                    <div v-if="involvement.tooltip" class="customtooltip">
-                            <img  src="/images/tooltip.svg" alt="tooltip"/>
-                            <span class="customtooltip__text">{{involvement.tooltipText}}</span>
-                        </div>
-                </div>
-                <div class="details__option">
-                    <span v-if="involvement.option == true"><font-awesome-icon icon="check-circle" :style="{color: '#64CA8D'}" ></font-awesome-icon> Tak </span>
-                    <span v-else-if="involvement.option == false"><font-awesome-icon icon="times-circle" :style="{color: 'red'}" ></font-awesome-icon> Nie </span>
-                    <span v-else>{{involvement.option}}</span>
+            <div class="details__container">
+                <div class="details__row" id="involvementRow" v-for="(involvement, id) in involvements" :key="'I'+id">
+                    <div class="details__name">
+                        {{involvement.name}}&nbsp;
+                        <div v-if="involvement.tooltip" class="customtooltip">
+                                <img  src="/images/tooltip.svg" alt="tooltip"/>
+                                <span class="customtooltip__text">{{involvement.tooltipText}}</span>
+                            </div>
+                    </div>
+                    <div class="details__option">
+                        <span v-if="involvement.option == true"><font-awesome-icon icon="check-circle" :style="{color: '#64CA8D'}" ></font-awesome-icon> Tak </span>
+                        <span v-else-if="involvement.option == false"><font-awesome-icon icon="times-circle" :style="{color: 'red'}" ></font-awesome-icon> Nie </span>
+                        <span v-else>{{involvement.option}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,6 +80,8 @@
         data(){
             return {
                 priceType: 'Monthly',
+                showPlatform: false,
+                showInvolvements: false,
                 pilotage:{
                     id: null,
                     people: null,
@@ -140,6 +148,30 @@
         },
         mounted() {
             this.getInfo();
+
+            let platform = document.getElementById('platform');
+            let involvement = document.getElementById('involvement');
+
+            platform.addEventListener('click', () => {
+                let content = document.getElementById('platformRow');
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    this.showPlatform       = false;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    this.showPlatform       = true;
+                }
+            });
+            involvement.addEventListener('click', () => {
+                let content = involvement.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    this.showInvolvements   = false;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    this.showInvolvements   = true;
+                }
+            });
         },
         methods:{
             getInfo(){

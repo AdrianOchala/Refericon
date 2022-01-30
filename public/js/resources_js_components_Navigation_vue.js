@@ -110,13 +110,15 @@ var render = function () {
     "div",
     { staticClass: "nav" },
     [
-      _c("router-link", { attrs: { to: { name: "editData" } } }, [
+      _c("router-link", { attrs: { exact: "", to: { name: "editData" } } }, [
         _vm._v("Edytuj dane"),
       ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: { name: "showPilotage" } } }, [
-        _vm._v("Pilotaż"),
-      ]),
+      _vm._v(" \n    "),
+      _c(
+        "router-link",
+        { attrs: { exact: "", to: { name: "showPilotage" } } },
+        [_vm._v("Pilotaż")]
+      ),
     ],
     1
   )

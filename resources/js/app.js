@@ -9,10 +9,10 @@ import { routes } from './routes';
 import Vue from 'vue';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faTimesCircle, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faCheckCircle, faTimesCircle);
+library.add(faCheckCircle, faTimesCircle, faChevronDown, faChevronUp);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(VueRouter);

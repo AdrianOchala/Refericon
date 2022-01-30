@@ -15546,10 +15546,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       priceType: 'Monthly',
+      showPlatform: false,
+      showInvolvements: false,
       pilotage: {
         id: null,
         people: null,
@@ -15601,17 +15609,43 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.getInfo();
+    var platform = document.getElementById('platform');
+    var involvement = document.getElementById('involvement');
+    platform.addEventListener('click', function () {
+      var content = document.getElementById('platformRow');
+
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        _this.showPlatform = false;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        _this.showPlatform = true;
+      }
+    });
+    involvement.addEventListener('click', function () {
+      var content = involvement.nextElementSibling;
+
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        _this.showInvolvements = false;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        _this.showInvolvements = true;
+      }
+    });
   },
   methods: {
     getInfo: function getInfo() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('api/pilotage').then(function (res) {
-        _this.pilotage.id = res.data.id;
-        _this.pilotage.people = res.data.people;
-        _this.pilotage.pricePerPerson = res.data.pricePerPerson;
-        _this.pilotage.priceMonthly = res.data.priceMonthly;
+        _this2.pilotage.id = res.data.id;
+        _this2.pilotage.people = res.data.people;
+        _this2.pilotage.pricePerPerson = res.data.pricePerPerson;
+        _this2.pilotage.priceMonthly = res.data.priceMonthly;
       });
     },
     changePrice: function changePrice(type) {
@@ -15666,7 +15700,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCheckCircle, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTimesCircle);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCheckCircle, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTimesCircle, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faChevronDown, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faChevronUp);
 vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon);
 vue__WEBPACK_IMPORTED_MODULE_7__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_8__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_7__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_2___default()));
@@ -38635,170 +38669,115 @@ var render = function () {
       _vm._v("Pilotaż - krok po kroku"),
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "pilotage__info" },
-      [
-        _c("div", { staticClass: "cost" }, [
-          _c("div", { staticClass: "cost__choice" }, [
-            _c("div", { staticClass: "cost__choice--title" }, [
-              _vm._v("Cena za wybrany pakiet"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "buttons" }, [
-              _c(
-                "button",
-                {
-                  class:
-                    _vm.priceType === "Monthly"
-                      ? "button--orange"
-                      : "button--gray-outlined",
-                  on: {
-                    click: function ($event) {
-                      return _vm.changePrice("Monthly")
-                    },
-                  },
-                },
-                [_vm._v("Miesięcznie")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  class:
-                    _vm.priceType === "Yearly"
-                      ? "button--orange"
-                      : "button--gray-outlined",
-                  on: {
-                    click: function ($event) {
-                      return _vm.changePrice("Yearly")
-                    },
-                  },
-                },
-                [_vm._v("Rocznie")]
-              ),
-            ]),
+    _c("div", { staticClass: "pilotage__info" }, [
+      _c("div", { staticClass: "cost" }, [
+        _c("div", { staticClass: "cost__choice" }, [
+          _c("div", { staticClass: "cost__choice--title" }, [
+            _vm._v("Cena za wybrany pakiet"),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "cost__money" }, [
-            _c("div", { staticClass: "buttons--center" }, [
-              _vm.priceType === "Monthly"
-                ? _c("button", { staticClass: "button--orange-pale" }, [
-                    _vm._v("Miesięcznie"),
-                  ])
-                : _c("button", { staticClass: "button--orange-pale" }, [
-                    _vm._v("Rocznie"),
-                  ]),
-            ]),
+          _c("div", { staticClass: "buttons" }, [
+            _c(
+              "button",
+              {
+                class:
+                  _vm.priceType === "Monthly"
+                    ? "button--orange"
+                    : "button--gray-outlined",
+                on: {
+                  click: function ($event) {
+                    return _vm.changePrice("Monthly")
+                  },
+                },
+              },
+              [_vm._v("Miesięcznie")]
+            ),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.pilotage.priceMonthly) + " PLN")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Kalkulacja dla " +
-                  _vm._s(_vm.pilotage.people) +
-                  " użytkowników"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(_vm._s(_vm.pilotage.pricePerPerson) + " PLN / osoba"),
-            ]),
+            _c(
+              "button",
+              {
+                class:
+                  _vm.priceType === "Yearly"
+                    ? "button--orange"
+                    : "button--gray-outlined",
+                on: {
+                  click: function ($event) {
+                    return _vm.changePrice("Yearly")
+                  },
+                },
+              },
+              [_vm._v("Rocznie")]
+            ),
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
+        _c("div", { staticClass: "cost__money" }, [
+          _c("div", { staticClass: "buttons--center" }, [
+            _vm.priceType === "Monthly"
+              ? _c("button", { staticClass: "button--orange-pale" }, [
+                  _vm._v("Miesięcznie"),
+                ])
+              : _c("button", { staticClass: "button--orange-pale" }, [
+                  _vm._v("Rocznie"),
+                ]),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.pilotage.priceMonthly) + " PLN")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "Kalkulacja dla " + _vm._s(_vm.pilotage.people) + " użytkowników"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(_vm._s(_vm.pilotage.pricePerPerson) + " PLN / osoba"),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "details" }, [
         _c(
           "div",
-          { staticClass: "details__container" },
-          _vm._l(_vm.platforms, function (platform, index) {
-            return _c(
-              "div",
-              { key: "P" + index, staticClass: "details__row" },
-              [
-                _c("div", { staticClass: "details__name" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(platform.name) +
-                      "  \n                    "
-                  ),
-                  platform.tooltip
-                    ? _c("div", { staticClass: "customtooltip" }, [
-                        _c("img", {
-                          attrs: { src: "/images/tooltip.svg", alt: "tooltip" },
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "customtooltip__text" }, [
-                          _vm._v(_vm._s(platform.tooltipText)),
-                        ]),
-                      ])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "details__option" }, [
-                  platform.option == true
-                    ? _c(
-                        "span",
-                        [
-                          _c("font-awesome-icon", {
-                            style: { color: "#64CA8D" },
-                            attrs: { icon: "check-circle" },
-                          }),
-                          _vm._v(" Tak "),
-                        ],
-                        1
-                      )
-                    : platform.option == false
-                    ? _c(
-                        "span",
-                        [
-                          _c("font-awesome-icon", {
-                            style: { color: "red" },
-                            attrs: { icon: "times-circle" },
-                          }),
-                          _vm._v(" Nie "),
-                        ],
-                        1
-                      )
-                    : _c("span", [
-                        _vm._v(_vm._s(platform.option) + "  "),
-                        index == 0
-                          ? _c("span", [_vm._v(_vm._s(_vm.pilotage.people))])
-                          : _vm._e(),
-                      ]),
-                ]),
-              ]
-            )
-          }),
-          0
+          { staticClass: "details__title", attrs: { id: "platform" } },
+          [
+            _vm._v("\n                Platforma  \n                "),
+            _vm.showPlatform
+              ? _c("font-awesome-icon", { attrs: { icon: "chevron-up" } })
+              : _c("font-awesome-icon", { attrs: { icon: "chevron-down" } }),
+          ],
+          1
         ),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._l(_vm.involvements, function (involvement, id) {
-          return _c("div", { key: "I" + id, staticClass: "details__row" }, [
+        _vm._m(0),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "details__container", attrs: { id: "platformRow" } },
+        _vm._l(_vm.platforms, function (platform, index) {
+          return _c("div", { key: "P" + index, staticClass: "details__row" }, [
             _c("div", { staticClass: "details__name" }, [
               _vm._v(
-                "\n                " +
-                  _vm._s(involvement.name) +
-                  " \n                "
+                "\n                    " +
+                  _vm._s(platform.name) +
+                  "  \n                    "
               ),
-              involvement.tooltip
+              platform.tooltip
                 ? _c("div", { staticClass: "customtooltip" }, [
                     _c("img", {
                       attrs: { src: "/images/tooltip.svg", alt: "tooltip" },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "customtooltip__text" }, [
-                      _vm._v(_vm._s(involvement.tooltipText)),
+                      _vm._v(_vm._s(platform.tooltipText)),
                     ]),
                   ])
                 : _vm._e(),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "details__option" }, [
-              involvement.option == true
+              platform.option == true
                 ? _c(
                     "span",
                     [
@@ -38810,7 +38789,7 @@ var render = function () {
                     ],
                     1
                   )
-                : involvement.option == false
+                : platform.option == false
                 ? _c(
                     "span",
                     [
@@ -38822,13 +38801,96 @@ var render = function () {
                     ],
                     1
                   )
-                : _c("span", [_vm._v(_vm._s(involvement.option))]),
+                : _c("span", [
+                    _vm._v(_vm._s(platform.option) + "  "),
+                    index == 0
+                      ? _c("span", [_vm._v(_vm._s(_vm.pilotage.people))])
+                      : _vm._e(),
+                  ]),
             ]),
           ])
         }),
-      ],
-      2
-    ),
+        0
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "details", attrs: { id: "involvement" } }, [
+        _c(
+          "div",
+          { staticClass: "details__title" },
+          [
+            _vm._v("\n                Zaangażowanie  \n                "),
+            _vm.showInvolvements
+              ? _c("font-awesome-icon", { attrs: { icon: "chevron-up" } })
+              : _c("font-awesome-icon", { attrs: { icon: "chevron-down" } }),
+          ],
+          1
+        ),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "details__container" },
+        _vm._l(_vm.involvements, function (involvement, id) {
+          return _c(
+            "div",
+            {
+              key: "I" + id,
+              staticClass: "details__row",
+              attrs: { id: "involvementRow" },
+            },
+            [
+              _c("div", { staticClass: "details__name" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(involvement.name) +
+                    " \n                    "
+                ),
+                involvement.tooltip
+                  ? _c("div", { staticClass: "customtooltip" }, [
+                      _c("img", {
+                        attrs: { src: "/images/tooltip.svg", alt: "tooltip" },
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "customtooltip__text" }, [
+                        _vm._v(_vm._s(involvement.tooltipText)),
+                      ]),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "details__option" }, [
+                involvement.option == true
+                  ? _c(
+                      "span",
+                      [
+                        _c("font-awesome-icon", {
+                          style: { color: "#64CA8D" },
+                          attrs: { icon: "check-circle" },
+                        }),
+                        _vm._v(" Tak "),
+                      ],
+                      1
+                    )
+                  : involvement.option == false
+                  ? _c(
+                      "span",
+                      [
+                        _c("font-awesome-icon", {
+                          style: { color: "red" },
+                          attrs: { icon: "times-circle" },
+                        }),
+                        _vm._v(" Nie "),
+                      ],
+                      1
+                    )
+                  : _c("span", [_vm._v(_vm._s(involvement.option))]),
+              ]),
+            ]
+          )
+        }),
+        0
+      ),
+    ]),
   ])
 }
 var staticRenderFns = [
@@ -38836,31 +38898,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "details" }, [
-      _c("div", { staticClass: "details__title" }, [
-        _vm._v("\n                Platforma\n            "),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "details__action" }, [
-        _c("button", { staticClass: "button--big" }, [
-          _vm._v("Start (pilotaż)"),
-        ]),
-      ]),
+    return _c("div", { staticClass: "details__action" }, [
+      _c("button", { staticClass: "button--big" }, [_vm._v("Start (pilotaż)")]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "details", staticStyle: { "margin-top": "4rem" } },
-      [
-        _c("div", { staticClass: "details__title" }, [
-          _vm._v("\n                Zaangażowanie\n            "),
-        ]),
-      ]
-    )
   },
 ]
 render._withStripped = true

@@ -3,14 +3,27 @@
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
-    // background-color: red;
     font-size: 2rem;
     line-height: 3.2rem;
     margin-bottom: 1.8rem;
 
+    &#involvement{
+        margin-top: 2rem;
+    }
+
     &__title{
         display: flex;
         flex-basis: 64%;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+
+        &:hover{
+            border-bottom: 3px solid #E8F0FC;
+        }
+
+        svg{
+            height: unset;
+        }
     }
 
     &__action{
@@ -22,7 +35,9 @@
         display: inherit;
         flex-direction: column;
         margin-bottom: 0rem;
-        // align-items: center;
+        max-height: 0px;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
     }
 
     &__row{
@@ -62,11 +77,6 @@
             content: "";
             position: absolute;
             bottom:0px;
-            // bottom: 0px;
-
         }
     }
-
 }
-
-

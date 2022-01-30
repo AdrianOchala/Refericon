@@ -1,0 +1,18 @@
+.nav{
+    display: flex;
+    align-self: center;
+    font-size: 2rem;
+    color: black;
+    padding: 2rem;
+
+    a{
+        text-decoration: none;
+        color: black;
+
+        &.router-link-active{
+            color: #FBAD1C;
+            border-bottom: 3px solid #FBAD1C;
+        }
+
+    }
+}

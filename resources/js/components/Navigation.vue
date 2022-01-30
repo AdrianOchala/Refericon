@@ -1,7 +1,7 @@
 <template>
     <div class="nav">
-        <router-link :to="{name: 'editData'}">Edytuj dane</router-link>
-        <router-link :to="{name: 'showPilotage'}">Pilotaż</router-link>
+        <router-link exact :to="{name: 'editData'}">Edytuj dane</router-link>&nbsp;
+        <router-link exact :to="{name: 'showPilotage'}">Pilotaż</router-link>
     </div>
 </template>
 

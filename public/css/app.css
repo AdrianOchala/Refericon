@@ -11425,9 +11425,20 @@ img:hover + .customtooltip__text {
   line-height: 3.2rem;
   margin-bottom: 1.8rem;
 }
+.details#involvement, #involvement.details__row {
+  margin-top: 2rem;
+}
 .details__title {
   display: flex;
   flex-basis: 64%;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+.details__title:hover {
+  border-bottom: 3px solid #E8F0FC;
+}
+.details__title svg {
+  height: unset;
 }
 .details__action {
   display: flex;
@@ -11438,6 +11449,9 @@ img:hover + .customtooltip__text {
   display: inherit;
   flex-direction: column;
   margin-bottom: 0rem;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 .details__row {
   margin-bottom: 0rem;
@@ -11530,4 +11544,20 @@ img:hover + .customtooltip__text {
   padding: 26px 40px;
   display: inherit;
   flex-direction: column;
+}
+
+.nav {
+  display: flex;
+  align-self: center;
+  font-size: 2rem;
+  color: black;
+  padding: 2rem;
+}
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+.nav a.router-link-active {
+  color: #FBAD1C;
+  border-bottom: 3px solid #FBAD1C;
 }
